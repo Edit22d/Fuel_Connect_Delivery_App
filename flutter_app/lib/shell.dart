@@ -1,3 +1,4 @@
+import 'screens/missing_screens.dart';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -168,9 +169,9 @@ class _ScreenMenuState extends State<ScreenMenu> {
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(3, 2, 3, 13),
-                    decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('PROTOTYPE', kind: Tx.label, color: FC.gold), FcText('FuelConnect screens', kind: Tx.subtitle)]),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('PROTOTYPE', kind: Tx.label, color: FC.gold), FcText('FuelConnect screens', kind: Tx.subtitle)]),
                       Container(
                         constraints: const BoxConstraints(minWidth: 28),
                         height: 28,
@@ -214,7 +215,7 @@ class _ScreenMenuState extends State<ScreenMenu> {
                 boxShadow: [BoxShadow(color: al(Colors.black, .35), blurRadius: 36, offset: const Offset(0, 12))],
               ),
               child: Center(
-                child: _open ? Transform.rotate(angle: math.pi / 4, child: const Ic(IconName.plus, size: 20, color: FC.gold)) : const Ic(IconName.menu, size: 20, color: FC.gold),
+                child: _open ? Transform.rotate(angle: math.pi / 4, child: Ic(IconName.plus, size: 20, color: FC.gold)) : Ic(IconName.menu, size: 20, color: FC.gold),
               ),
             ),
           ),
@@ -241,7 +242,7 @@ class _ScreenMenuState extends State<ScreenMenu> {
             Text((i + 1).toString().padLeft(2, '0'), style: fs(8.32, color: FC.dim, h: 1.2)),
             const SizedBox(width: 7),
             Expanded(child: Text(e.label, style: fs(9.92, color: active ? FC.gold : FC.muted, w: FontWeight.w700, h: 1.25))),
-            if (active) const Ic(IconName.check, size: 14, color: FC.gold),
+            if (active) Ic(IconName.check, size: 14, color: FC.gold),
           ]),
         ),
       ),

@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       child: ColoredBox(
         color: FC.black,
         child: Stack(children: [
-          const Positioned.fill(
+          Positioned.fill(
             child: Glow(fx: .5, fy: .37, colors: [Color(0xFF26220E), Color(0xFF0D0F11), FC.black], stops: [0, .34, .67]),
           ),
           Center(
@@ -60,11 +60,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ),
           Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Transform.scale(scale: 1.35, child: const Logo()),
+              Transform.scale(
+  scale: 1.35,
+  child: Image.asset(
+    'assets/images/logo.png',
+    width: 220,
+    height: 220,
+    fit: BoxFit.contain,
+  ),
+),
               const SizedBox(height: 28),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 260),
-                child: const FcText('Fuel, delivered wherever the road takes you.', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
+                child: FcText('Fuel, delivered wherever the road takes you.', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
               ),
             ]),
           ),
@@ -141,7 +149,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Padding(
           padding: EdgeInsets.fromLTRB(h, topInset(context) + 24, math.max(h, kRightInset), 0),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            const Logo(compact: true),
+            Image.asset(
+  'assets/images/logo.png',
+  width: 100,
+  height: 55,
+  fit: BoxFit.contain,
+),
             TextAction('Skip', onTap: () => widget.go(Screen.login)),
           ]),
         ),
@@ -149,36 +162,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ]);
 
     final pad = cl(context, 22, 5, 64);
-    final copy = ScrollFill(
-      child: Padding(
-        padding: wide ? EdgeInsets.symmetric(horizontal: vw(context) * .07, vertical: vw(context) * .09) : EdgeInsets.fromLTRB(pad, 10, pad, 34),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          FcText(s.eyebrow, kind: Tx.label, color: FC.gold),
-          const SizedBox(height: 15),
-          FcText(s.title, kind: Tx.display),
-          const SizedBox(height: 15),
-          ConstrainedBox(constraints: const BoxConstraints(maxWidth: 500), child: FcText(s.body, color: FC.muted)),
-          const Spacer(),
-          const SizedBox(height: 18),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: [
-              for (var d = 0; d < kSlides.length; d++)
-                Tap(
-                  onTap: () => setState(() => _i = d),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 7, top: 6, bottom: 6),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: d == _i ? 28 : 7,
-                      height: 7,
-                      decoration: BoxDecoration(color: d == _i ? FC.gold : FC.dim, borderRadius: BorderRadius.circular(9)),
-                    ),
-                  ),
-                ),
-            ]),
-            FcButton(_i == kSlides.length - 1 ? 'Get started' : 'Continue', expand: false, trailingIcon: IconName.arrow, onTap: _next),
-          ]),
-        ]),
+    final copy = LayoutBuilder(
+      builder: (context, cons) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: cons.maxHeight),
+          child: Padding(
+            padding: wide ? EdgeInsets.symmetric(horizontal: vw(context) * .07, vertical: vw(context) * .09) : EdgeInsets.fromLTRB(pad, 10, pad, 34),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  FcText(s.eyebrow, kind: Tx.label, color: FC.gold),
+                  const SizedBox(height: 15),
+                  FcText(s.title, kind: Tx.display),
+                  const SizedBox(height: 15),
+                  ConstrainedBox(constraints: const BoxConstraints(maxWidth: 500), child: FcText(s.body, color: FC.muted)),
+                ]),
+                Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(height: 18),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    Row(children: [
+                      for (var d = 0; d < kSlides.length; d++)
+                        Tap(
+                          onTap: () => setState(() => _i = d),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 7, top: 6, bottom: 6),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              width: d == _i ? 28 : 7,
+                              height: 7,
+                              decoration: BoxDecoration(color: d == _i ? FC.gold : FC.dim, borderRadius: BorderRadius.circular(9)),
+                            ),
+                          ),
+                        ),
+                    ]),
+                    FcButton(_i == kSlides.length - 1 ? 'Get started' : 'Continue', expand: false, trailingIcon: IconName.arrow, onTap: _next),
+                  ]),
+                ]),
+              ],
+            ),
+          ),
+        ),
       ),
     );
 
@@ -257,9 +282,9 @@ class _Divider extends StatelessWidget {
   const _Divider(this.text);
   @override
   Widget build(BuildContext context) => Row(children: [
-        const Expanded(child: Divider(color: FC.line, height: 1)),
+        Expanded(child: Divider(color: FC.line, height: 1)),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: FcText(text, kind: Tx.caption, color: FC.dim)),
-        const Expanded(child: Divider(color: FC.line, height: 1)),
+        Expanded(child: Divider(color: FC.line, height: 1)),
       ]);
 }
 
@@ -322,9 +347,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return _AuthLayout(children: [
-      const FcText('WELCOME BACK', kind: Tx.label, color: FC.gold),
+      FcText('WELCOME BACK', kind: Tx.label, color: FC.gold),
       const FcText('Sign in to FuelConnect', kind: Tx.title),
-      const FcText('Fuel from trusted stations, delivered wherever you are.', color: FC.muted),
+      FcText('Fuel from trusted stations, delivered wherever you are.', color: FC.muted),
       FcField(label: 'Phone number', hint: '+256 700 123 456', icon: IconName.phone, controller: _phone, keyboard: TextInputType.phone, error: _phoneErr, action: TextInputAction.next),
       FcField(label: 'Password', hint: 'Enter your password', icon: IconName.shield, password: true, controller: _pass, error: _passErr, action: TextInputAction.done, onSubmitted: (_) => _submit()),
       Align(alignment: Alignment.centerRight, child: TextAction('Forgot password?', onTap: () => widget.go(Screen.forgot))),
@@ -390,7 +415,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return AppPage(
       header: PageHeader(title: 'Create account', goBack: () => app.backOr(Screen.login)),
       body: Narrow(gap: 20, children: [
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           FcText('JOIN FUELCONNECT', kind: Tx.label, color: FC.gold),
           SizedBox(height: 9),
           FcText('Let’s get you moving.', kind: Tx.title),
@@ -410,12 +435,12 @@ class _SignupScreenState extends State<SignupScreen> {
               onChanged: (v) => setState(() => _agree = v ?? false),
               activeColor: FC.gold,
               checkColor: FC.onGold,
-              side: const BorderSide(color: FC.dim),
+              side: BorderSide(color: FC.dim),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           ),
           const SizedBox(width: 10),
-          const Expanded(child: FcText('I agree to the Terms of Service and Fuel Delivery Safety Policy.', kind: Tx.caption, color: FC.muted)),
+          Expanded(child: FcText('I agree to the Terms of Service and Fuel Delivery Safety Policy.', kind: Tx.caption, color: FC.muted)),
         ]),
         if (_formErr != null) FormError(_formErr!),
         FcButton('Create secure account', loading: _busy, onTap: _submit),
@@ -474,7 +499,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
       body: Narrow(gap: 20, padTop: vh(context) * .10, children: [
         const RoundFeature(IconName.shield),
         const FcText('Recover your account', kind: Tx.title, align: TextAlign.center),
-        const FcText('Enter your registered phone number. We’ll send you a secure reset code.', color: FC.muted, align: TextAlign.center),
+        FcText('Enter your registered phone number. We’ll send you a secure reset code.', color: FC.muted, align: TextAlign.center),
         FcField(
           label: 'Phone number',
           hint: '+256 700 123 456',
@@ -665,7 +690,7 @@ class _OtpScreenState extends State<OtpScreen> {
         const RoundFeature(IconName.phone),
         const FcText('Check your phone', kind: Tx.title, align: TextAlign.center),
         Column(children: [
-          const FcText('We sent a 6-digit security code to', color: FC.muted, align: TextAlign.center),
+          FcText('We sent a 6-digit security code to', color: FC.muted, align: TextAlign.center),
           FcText(phone, color: FC.ink, weight: FontWeight.w700, align: TextAlign.center),
         ]),
         CodeInput(
@@ -735,7 +760,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
           width: 18,
           height: 18,
           decoration: BoxDecoration(shape: BoxShape.circle, color: ok ? al(FC.green, .15) : Colors.transparent, border: Border.all(color: ok ? FC.green : FC.dim)),
-          child: ok ? const Center(child: Ic(IconName.check, size: 11, color: FC.green)) : null,
+          child: ok ? Center(child: Ic(IconName.check, size: 11, color: FC.green)) : null,
         ),
         const SizedBox(width: 10),
         Expanded(child: FcText(text, kind: Tx.caption, color: ok ? FC.ink : FC.muted)),
@@ -751,12 +776,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             child: Container(
               width: 82,
               height: 82,
-              decoration: BoxDecoration(shape: BoxShape.circle, gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [FC.gold, FC.goldDeep]), boxShadow: [BoxShadow(color: al(FC.gold, .18), blurRadius: 45, offset: const Offset(0, 14))]),
-              child: const Center(child: Ic(IconName.check, size: 44, color: FC.onGold)),
+              decoration: BoxDecoration(shape: BoxShape.circle, gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [FC.gold, FC.goldDeep]), boxShadow: [BoxShadow(color: al(FC.gold, .18), blurRadius: 45, offset: const Offset(0, 14))]),
+              child: Center(child: Ic(IconName.check, size: 44, color: FC.onGold)),
             ),
           ),
           const FcText('Password updated', kind: Tx.title, align: TextAlign.center),
-          const FcText('Your password has been changed. Sign in with your new password to continue.', color: FC.muted, align: TextAlign.center),
+          FcText('Your password has been changed. Sign in with your new password to continue.', color: FC.muted, align: TextAlign.center),
           FcButton('Back to sign in', onTap: () => widget.go(Screen.login, root: true)),
         ]),
       );
@@ -774,7 +799,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       body: Narrow(gap: 20, children: [
         const RoundFeature(IconName.shield),
         const FcText('Create a new password', kind: Tx.title, align: TextAlign.center),
-        const FcText('Choose a strong password you haven’t used before. You’ll use it to sign in to FuelConnect.', color: FC.muted, align: TextAlign.center),
+        FcText('Choose a strong password you haven’t used before. You’ll use it to sign in to FuelConnect.', color: FC.muted, align: TextAlign.center),
         FcField(label: 'New password', hint: 'At least 8 characters', icon: IconName.shield, password: true, showToggle: true, controller: _p1, error: _err1, action: TextInputAction.next, onChanged: (_) => setState(() {})),
         if (p.isNotEmpty)
           Row(children: [
@@ -839,12 +864,12 @@ class LocationAccessScreen extends StatelessWidget {
                   BoxShadow(color: al(Colors.black, .35), blurRadius: 45, offset: const Offset(0, 18)),
                 ],
               ),
-              child: const Center(child: Ic(IconName.location, size: 30, color: FC.onGold)),
+              child: Center(child: Ic(IconName.location, size: 30, color: FC.onGold)),
             ),
           ),
         ]);
       }),
-      const DecoratedBox(
+      DecoratedBox(
         decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0x00080A0C), FC.black], stops: [.3, 1])),
       ),
     ]);
@@ -863,9 +888,9 @@ class LocationAccessScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.fromLTRB(pad, 12, pad, 38 + bottomInset(context)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: gapped([
-            const FcText('PRECISE & SECURE', kind: Tx.label, color: FC.gold),
+            FcText('PRECISE & SECURE', kind: Tx.label, color: FC.gold),
             const FcText('Enable your location', kind: Tx.title),
-            const FcText('We use your location to show nearby partner stations, accurate delivery fees, and live driver tracking.', color: FC.muted),
+            FcText('We use your location to show nearby partner stations, accurate delivery fees, and live driver tracking.', color: FC.muted),
             Column(children: gapped([
               point(IconName.fuel, 'Nearby verified stations'),
               point(IconName.truck, 'Accurate arrival estimates'),

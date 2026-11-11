@@ -94,7 +94,7 @@ class _AddressFormState extends State<_AddressForm> {
 
   @override
   Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const FcText('SAVED PLACES', kind: Tx.label, color: FC.gold),
+        FcText('SAVED PLACES', kind: Tx.label, color: FC.gold),
         const SizedBox(height: 10),
         for (final p in app.places)
           Tap(
@@ -302,7 +302,7 @@ class _TopUpFormState extends State<_TopUpForm> {
         const SizedBox(height: 16),
         FcField(label: 'Amount (UGX)', hint: 'Enter amount', icon: IconName.wallet, controller: _c, keyboard: TextInputType.number, error: _err, formatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(7)], onChanged: (_) => setState(() => _err = null), action: TextInputAction.done, onSubmitted: (_) => _go()),
         const SizedBox(height: 8),
-        const FcText('Charged to MTN Mobile Money +256 700 ••• 456', kind: Tx.caption, color: FC.muted),
+        FcText('Charged to MTN Mobile Money +256 700 ••• 456', kind: Tx.caption, color: FC.muted),
         const SizedBox(height: 18),
         FcButton('Top up', onTap: _go),
       ]);

@@ -7,7 +7,7 @@ import '../services/auth_service.dart';
 //   • Order confirmed   • Edit profile   • App settings
 // (Cancel order already lives in order_screens.dart and is only wired in.)
 
-Widget _chevron() => const Ic(IconName.chevron, size: 18, color: FC.dim);
+Widget _chevron() => Ic(IconName.chevron, size: 18, color: FC.dim);
 
 Widget _sectionLabel(String t) => Padding(
       padding: const EdgeInsets.only(top: 26, bottom: 10),
@@ -63,12 +63,12 @@ class OrderConfirmationScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(pad, vh(context) * .09 + topInset(context), pad, 40 + bottomInset(context)),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: gapped([
                   const _OrbitBadge(IconName.check),
-                  const FcText('PAYMENT CONFIRMED', kind: Tx.label, color: FC.gold, align: TextAlign.center),
+                  FcText('PAYMENT CONFIRMED', kind: Tx.label, color: FC.gold, align: TextAlign.center),
                   const FcText('Your order is confirmed.', kind: Tx.display, align: TextAlign.center),
                   FcText('Stabex Kira Road is preparing your fuel. We’ll assign a certified delivery partner shortly.', color: FC.muted, align: TextAlign.center),
                   Panel(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                    child: const Column(children: [
+                    child: Column(children: [
                       FcText('ORDER NUMBER', kind: Tx.caption, color: FC.muted),
                       SizedBox(height: 4),
                       FcText('#FC-29841', kind: Tx.title),
@@ -86,9 +86,9 @@ class OrderConfirmationScreen extends StatelessWidget {
                   Panel(
                     padding: const EdgeInsets.all(14),
                     child: Row(children: [
-                      const Ic(IconName.bell, color: FC.gold),
+                      Ic(IconName.bell, color: FC.gold),
                       const SizedBox(width: 12),
-                      const Expanded(
+                      Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           FcText('We’ll keep you updated', kind: Tx.label),
                           FcText('You’ll receive an alert when your rider collects the fuel.', kind: Tx.caption, color: FC.muted),
@@ -171,20 +171,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         // The phone number is the sign-in identity, so changing it needs a
         // verification code. It is shown read-only here.
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const FcText('Phone number', kind: Tx.label, color: FC.muted),
+          FcText('Phone number', kind: Tx.label, color: FC.muted),
           const SizedBox(height: 8),
           Panel(
             radius: 14,
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             child: Row(children: [
-              const Ic(IconName.phone, size: 18, color: FC.dim),
+              Ic(IconName.phone, size: 18, color: FC.dim),
               const SizedBox(width: 12),
               Expanded(child: FcText(maskPhone(pr.phone), kind: Tx.body)),
               const VerifiedPill('VERIFIED', check: true),
             ]),
           ),
           const SizedBox(height: 6),
-          const FcText('To change your number, contact FuelConnect support.', kind: Tx.caption, color: FC.muted),
+          FcText('To change your number, contact FuelConnect support.', kind: Tx.caption, color: FC.muted),
         ]),
         FcField(label: 'Email address', hint: 'joel.kato@email.com', icon: IconName.card, controller: _email, keyboard: TextInputType.emailAddress, error: _emailErr, action: TextInputAction.next),
         FcField(label: 'Emergency contact', hint: '+256 772 000 000', icon: IconName.phone, controller: _emergency, keyboard: TextInputType.phone, error: _emergencyErr, action: TextInputAction.done, onSubmitted: (_) => _save()),
@@ -194,7 +194,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 }
 
-// ===========================================================================
+/// ===========================================================================
 // App settings
 // ===========================================================================
 class AppSettingsScreen extends StatefulWidget {
@@ -210,7 +210,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
         child: Container(
           constraints: const BoxConstraints(minHeight: 57),
           padding: const EdgeInsets.symmetric(horizontal: 14),
-          decoration: BoxDecoration(border: last ? null : const Border(bottom: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: last ? null : Border(bottom: BorderSide(color: FC.line))),
           child: Row(children: [
             Ic(icon, color: FC.gold),
             const SizedBox(width: 12),
@@ -258,7 +258,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
             },
             child: Container(
               constraints: const BoxConstraints(minHeight: 52),
-              decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
               child: Row(children: [
                 Expanded(child: FcText(l, kind: Tx.label)),
                 RadioDot(selected: extras.language == l),
@@ -266,7 +266,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
             ),
           ),
         const SizedBox(height: 10),
-        const FcText('More languages are coming soon. Screens stay in English for now.', kind: Tx.caption, color: FC.muted),
+        FcText('More languages are coming soon. Screens stay in English for now.', kind: Tx.caption, color: FC.muted),
       ]),
     );
     if (mounted) setState(() {});
@@ -277,6 +277,10 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     return AppPage(
       header: PageHeader(title: 'App settings', goBack: () => app.backOr(Screen.profile)),
       body: Narrow(gap: 0, padTop: 8, children: [
+        _sectionLabel('APPEARANCE'),
+        _group([
+          _row(IconName.star, 'Dark mode', last: true, trailing: FcToggle(on: app.isDark, onTap: () => setState(() => app.toggleTheme()))),
+        ]),
         _sectionLabel('NOTIFICATIONS'),
         _group([
           _row(IconName.bell, 'Order updates', trailing: FcToggle(on: extras.orderUpdatesOn, onTap: () => setState(() => extras.orderUpdatesOn = !extras.orderUpdatesOn))),

@@ -36,10 +36,10 @@ const Map<IconName, String> _markup = {
 class Ic extends StatelessWidget {
   final IconName name;
   final double size;
-  final Color color;
+  final Color? color; // null = FC.ink for the current theme
   final bool filled;
   final bool flipX;
-  const Ic(this.name, {super.key, this.size = 20, this.color = FC.ink, this.filled = false, this.flipX = false});
+  const Ic(this.name, {super.key, this.size = 20, this.color, this.filled = false, this.flipX = false});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class Ic extends StatelessWidget {
       svg,
       width: size,
       height: size,
-      colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      colorFilter: ColorFilter.mode(color ?? FC.ink, BlendMode.srcIn),
     );
     if (flipX) w = Transform.flip(flipX: true, child: w);
     return w;

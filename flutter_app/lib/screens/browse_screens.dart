@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        const Positioned.fill(
+        Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0x00080A0C), FC.black], stops: [.55, 1])),
           ),
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const FcText('Good evening,', kind: Tx.caption, color: FC.muted),
+                FcText('Good evening,', kind: Tx.caption, color: FC.muted),
                 FcText(auth.profile.name, kind: Tx.subtitle),
               ]),
               Tap(
@@ -102,11 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(color: const Color(0xB8080A0C), borderRadius: BorderRadius.circular(20), border: Border.all(color: al(Colors.white, .1))),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  const Ic(IconName.location, size: 16, color: FC.gold),
+                  Ic(IconName.location, size: 16, color: FC.gold),
                   const SizedBox(width: 8),
                   Text(app.location, style: fs(10.56)),
                   const SizedBox(width: 8),
-                  const Ic(IconName.chevron, size: 15, color: FC.muted),
+                  Ic(IconName.chevron, size: 15, color: FC.muted),
                 ]),
               ),
             ),
@@ -114,9 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 570),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: gapped([
-                const FcText('FUEL ON YOUR SCHEDULE', kind: Tx.label, color: FC.gold),
+                FcText('FUEL ON YOUR SCHEDULE', kind: Tx.label, color: FC.gold),
                 const FcText('Running low?\nWe’re already close.', kind: Tx.display),
-                const FcText('Genuine fuel from trusted stations, delivered safely to you.', color: FC.muted),
+                FcText('Genuine fuel from trusted stations, delivered safely to you.', color: FC.muted),
                 const SizedBox(height: 0),
                 FcButton('Order fuel now', expand: false, trailingIcon: IconName.arrow, onTap: () => widget.go(Screen.station)),
               ], 13)),
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     final list = results.isEmpty
-        ? const Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No stations match your search.', color: FC.muted, align: TextAlign.center))
+        ? Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No stations match your search.', color: FC.muted, align: TextAlign.center))
         : LayoutBuilder(builder: (c, cons) {
             final cols = wide ? 2 : 1;
             final w = (cons.maxWidth - 14 * (cols - 1)) / cols;
@@ -208,11 +208,11 @@ class _PartnersScreenState extends State<PartnersScreen> {
       header: PageHeader(title: 'Partner stations', goBack: () => app.backOr(Screen.home), action: RoundAction(IconName.profile, onTap: () => widget.go(Screen.profile))),
       body: ContentSection(maxWide: 2000, children: [
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const FcText('VERIFIED NETWORK', kind: Tx.label, color: FC.gold),
+          FcText('VERIFIED NETWORK', kind: Tx.label, color: FC.gold),
           const SizedBox(height: 8),
           ConstrainedBox(constraints: const BoxConstraints(maxWidth: 620), child: const FcText('Choose a station you trust.', kind: Tx.title)),
           const SizedBox(height: 8),
-          ConstrainedBox(constraints: const BoxConstraints(maxWidth: 620), child: const FcText('Compare live prices, delivery times, and verified product availability across Kampala.', color: FC.muted)),
+          ConstrainedBox(constraints: const BoxConstraints(maxWidth: 620), child: FcText('Compare live prices, delivery times, and verified product availability across Kampala.', color: FC.muted)),
         ]),
         const SizedBox(height: 18),
         SearchBox(hint: 'Search by station, area or fuel', controller: _q, onChanged: (v) => setState(() => _query = v)),
@@ -272,7 +272,7 @@ class _PartnersScreenState extends State<PartnersScreen> {
         }),
         const SectionHeading('Available near you', caption: 'Sorted by fastest delivery'),
         if (results.isEmpty)
-          const Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No stations match your search.', color: FC.muted, align: TextAlign.center))
+          Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No stations match your search.', color: FC.muted, align: TextAlign.center))
         else
           LayoutBuilder(builder: (c, cons) {
             final cols = wide ? 2 : 1;
@@ -297,7 +297,7 @@ class StationScreen extends StatefulWidget {
 class _StationScreenState extends State<StationScreen> {
   Widget _stat(IconName icon, String value, String label, {bool last = false}) => Expanded(
         child: Container(
-          decoration: BoxDecoration(border: last ? null : const Border(right: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: last ? null : Border(right: BorderSide(color: FC.line))),
           child: Column(children: [
             Ic(icon, color: FC.gold),
             const SizedBox(height: 4),
@@ -361,11 +361,11 @@ class _StationScreenState extends State<StationScreen> {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const VerifiedPill('Verified partner', check: true, iconSize: 14),
             const SizedBox(height: 8),
-            const FcText('STABEX', kind: Tx.label, color: FC.gold),
+            FcText('STABEX', kind: Tx.label, color: FC.gold),
             const SizedBox(height: 8),
             const FcText('Stabex Kira Road', kind: Tx.display),
             const SizedBox(height: 8),
-            const FcText('Kira Road, Kampala · Open 24 hours', kind: Tx.caption, color: FC.muted),
+            FcText('Kira Road, Kampala · Open 24 hours', kind: Tx.caption, color: FC.muted),
           ]),
         ),
       ]),
@@ -382,7 +382,7 @@ class _StationScreenState extends State<StationScreen> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 18, 0, 24),
-                  decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
                   child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     _stat(IconName.star, '4.9', '320 reviews'),
                     _stat(IconName.location, '1.8 km', 'Distance'),

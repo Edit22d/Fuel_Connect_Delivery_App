@@ -67,7 +67,7 @@ class _FuelScreenState extends State<FuelScreen> {
         ]),
         Panel(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: gapped([
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               FcText('QUANTITY', kind: Tx.label),
               FcText('How much should we deliver?', kind: Tx.caption, color: FC.muted),
             ]),
@@ -81,7 +81,7 @@ class _FuelScreenState extends State<FuelScreen> {
             ]),
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: LinearProgressIndicator(value: l / 100, minHeight: 5, backgroundColor: FC.line, valueColor: const AlwaysStoppedAnimation(FC.gold)),
+              child: LinearProgressIndicator(value: l / 100, minHeight: 5, backgroundColor: FC.line, valueColor: AlwaysStoppedAnimation(FC.gold)),
             ),
             Row(children: [
               for (final a in [15, 25, 35, 50])
@@ -105,11 +105,11 @@ class _FuelScreenState extends State<FuelScreen> {
         const SafetyNote(title: 'Certified safe delivery', body: 'Delivered in sealed, metered equipment by trained partners.'),
         Container(
           padding: const EdgeInsets.only(top: 20),
-          decoration: const BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Flexible(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const FcText('Estimated fuel total', kind: Tx.caption, color: FC.muted),
+                FcText('Estimated fuel total', kind: Tx.caption, color: FC.muted),
                 FcText('UGX ${fmt(app.fuelTotal)}', kind: Tx.title),
               ]),
             ),
@@ -186,7 +186,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
               if (added == true && mounted) setState(() => app.vehicleId = app.vehicles.last.id);
             },
             child: Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: Row(mainAxisSize: MainAxisSize.min, children: [
-              const Ic(IconName.plus, color: FC.gold),
+              Ic(IconName.plus, color: FC.gold),
               const SizedBox(width: 6),
               Text('Add another vehicle', style: fs(11.2, color: FC.gold, w: FontWeight.w700)),
             ])),
@@ -198,11 +198,11 @@ class _VehicleScreenState extends State<VehicleScreen> {
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(color: al(FC.danger, .06), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.danger, .25))),
                 child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Ic(IconName.shield, color: FC.danger),
+                  Ic(IconName.shield, color: FC.danger),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const FcText('Fuel compatibility check', kind: Tx.label, color: FC.danger),
+                      FcText('Fuel compatibility check', kind: Tx.label, color: FC.danger),
                       const SizedBox(height: 3),
                       FcText('Selected vehicle uses ${v.fuel.toLowerCase()}, but your order is ${app.fuelType.toLowerCase()}. Change the fuel or pick another vehicle.', kind: Tx.caption, color: FC.muted),
                     ]),
@@ -293,7 +293,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(21), topRight: Radius.circular(21), bottomRight: Radius.circular(21), bottomLeft: Radius.circular(4)),
                     boxShadow: [BoxShadow(color: al(FC.gold, .12), spreadRadius: 7)],
                   ),
-                  child: Transform.rotate(angle: math.pi / 4, child: const Center(child: Ic(IconName.location, color: FC.onGold))),
+                  child: Transform.rotate(angle: math.pi / 4, child: Center(child: Ic(IconName.location, color: FC.onGold))),
                 ),
               ),
             ),
@@ -310,13 +310,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
                   decoration: BoxDecoration(color: const Color(0xEB0C0E11), borderRadius: BorderRadius.circular(12), border: Border.all(color: FC.line)),
                   child: Row(children: [
-                    const Ic(IconName.location, size: 17, color: FC.gold),
+                    Ic(IconName.location, size: 17, color: FC.gold),
                     const SizedBox(width: 12),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const FcText('DELIVERY LOCATION', kind: Tx.caption, color: FC.muted),
+                      FcText('DELIVERY LOCATION', kind: Tx.caption, color: FC.muted),
                       FcText(app.deliveryAddress, kind: Tx.label, maxLines: 1),
                     ])),
-                    const Ic(IconName.chevron, size: 16, color: FC.muted),
+                    Ic(IconName.chevron, size: 16, color: FC.muted),
                   ]),
                 ),
               ),
@@ -343,7 +343,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         FcField(label: 'Delivery note (optional)', hint: 'Vehicle color, parking level...', controller: _note, onChanged: (v) => app.deliveryNote = v),
         Container(
           padding: const EdgeInsets.only(top: 18),
-          decoration: const BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
           child: Row(children: [
             ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/images/station-hero.jpg', width: 48, height: 48, fit: BoxFit.cover)),
             const SizedBox(width: 12),
@@ -429,7 +429,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               if (ok == true && mounted) setState(() => app.payId = app.payMethods.last.id);
             },
             child: Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: Row(mainAxisSize: MainAxisSize.min, children: [
-              const Ic(IconName.plus, color: FC.gold),
+              Ic(IconName.plus, color: FC.gold),
               const SizedBox(width: 6),
               Text('Add new payment method', style: fs(11.2, color: FC.gold, w: FontWeight.w700)),
             ])),
@@ -444,7 +444,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             TotalRow('Total', 'UGX ${fmt(total)}'),
           ], 13)),
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Ic(IconName.shield, size: 16, color: FC.green),
           SizedBox(width: 6),
           FcText('Encrypted and protected payment', kind: Tx.caption, color: FC.muted),
@@ -510,7 +510,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             Positioned(
               left: w * .27,
               top: h * .62,
-              child: Container(width: 43, height: 43, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.ink), child: const Center(child: Ic(IconName.location, color: Color(0xFF111111)))),
+              child: Container(width: 43, height: 43, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.ink), child: const Center(child: Ic(IconName.location, color: Color(0xFF111111)))),
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 900),
@@ -597,9 +597,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
         radius: 12,
         padding: const EdgeInsets.all(12),
         child: Row(children: [
-          Container(width: 44, height: 44, alignment: Alignment.center, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: Text('MK', style: fs(12, color: const Color(0xFF111111), w: FontWeight.w800, h: 1))),
+          Container(width: 44, height: 44, alignment: Alignment.center, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: Text('MK', style: fs(12, color: const Color(0xFF111111), w: FontWeight.w800, h: 1))),
           const SizedBox(width: 12),
-          const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Marcus K.', kind: Tx.label), FcText('Certified delivery partner · 4.9', kind: Tx.caption, color: FC.muted)])),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Marcus K.', kind: Tx.label), FcText('Certified delivery partner · 4.9', kind: Tx.caption, color: FC.muted)])),
           FcButton.icon(IconName.phone, onTap: () => toast(context, 'Calling Marcus K. will work once the backend shares driver contact details.')),
         ]),
       ),
@@ -645,7 +645,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
               Container(
                 constraints: BoxConstraints(minHeight: vh(context) - (mapH - 25)),
                 padding: EdgeInsets.fromLTRB(pad, 12, pad, 34 + bottomInset(context)),
-                decoration: const BoxDecoration(color: FC.black, borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
+                decoration: BoxDecoration(color: FC.black, borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
                 child: _sheet(context, handle: true),
               ),
             ]),
@@ -774,7 +774,7 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(shape: BoxShape.circle, color: al(FC.gold, .08), border: Border.all(color: FC.gold)),
-              child: const Center(child: Ic(IconName.truck, color: FC.gold)),
+              child: Center(child: Ic(IconName.truck, color: FC.gold)),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -782,15 +782,15 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
                 const LivePill('ON THE WAY'),
                 const SizedBox(height: 6),
                 FcText('${app.productName} · ${app.litres}L', kind: Tx.subtitle),
-                const FcText('Stabex Kira Road · Order #FC-29841', kind: Tx.caption, color: FC.muted),
+                FcText('Stabex Kira Road · Order #FC-29841', kind: Tx.caption, color: FC.muted),
               ]),
             ),
-            const FcText('12–16 min', kind: Tx.label, color: FC.gold),
+            FcText('12–16 min', kind: Tx.label, color: FC.gold),
           ]),
         ),
 
         // intro
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           FcText('CANCEL DELIVERY', kind: Tx.label, color: FC.gold),
           SizedBox(height: 9),
           FcText('Why are you cancelling?', kind: Tx.title),
@@ -827,11 +827,11 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(color: al(FC.danger, .06), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.danger, .25))),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Ic(IconName.shield, color: FC.danger),
+            Ic(IconName.shield, color: FC.danger),
             const SizedBox(width: 12),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const FcText('Your fuel has already been collected', kind: Tx.label, color: FC.danger),
+                FcText('Your fuel has already been collected', kind: Tx.label, color: FC.danger),
                 const SizedBox(height: 3),
                 FcText(
                   'A UGX ${fmt(_cancelFee)} cancellation fee applies because your delivery partner has collected the fuel and started the trip.',
@@ -856,7 +856,7 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
 
         FcButton('Confirm cancellation', onTap: _reason.isEmpty ? null : () => setState(() => _cancelled = true)),
         FcButton('Keep my order', variant: BV.outline, onTap: () => widget.go(Screen.tracking)),
-        const FcText('Need help instead? Contact FuelConnect support.', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
+        FcText('Need help instead? Contact FuelConnect support.', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
       ]),
     );
   }
@@ -896,9 +896,9 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
                       ),
                     ),
                   ),
-                  const FcText('ORDER CANCELLED', kind: Tx.label, color: FC.gold, align: TextAlign.center),
+                  FcText('ORDER CANCELLED', kind: Tx.label, color: FC.gold, align: TextAlign.center),
                   const FcText('Your order has been cancelled.', kind: Tx.display, align: TextAlign.center),
-                  const FcText(
+                  FcText(
                     'We’ve notified Stabex Kira Road and your delivery partner. Your refund is being processed.',
                     color: FC.muted,
                     align: TextAlign.center,
@@ -915,10 +915,10 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
                   Panel(
                     padding: const EdgeInsets.all(14),
                     child: Row(children: [
-                      const Ic(IconName.clock, color: FC.gold),
+                      Ic(IconName.clock, color: FC.gold),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           FcText('Refund in progress', kind: Tx.label),
                           FcText('We’ll send a notification when the refund is complete.', kind: Tx.caption, color: FC.muted),
                         ]),

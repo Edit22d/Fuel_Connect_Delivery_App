@@ -91,12 +91,12 @@ class _JobCard extends StatelessWidget {
             const SizedBox(height: 14),
             Container(
               padding: const EdgeInsets.only(top: 12),
-              decoration: const BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
+              decoration: BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
               child: Row(children: [
                 Expanded(child: FcText(job.productLine, kind: Tx.caption, color: FC.muted)),
                 FcText('${job.minutes} min', kind: Tx.caption, color: FC.muted),
                 const SizedBox(width: 8),
-                const Ic(IconName.chevron, size: 16, color: FC.dim),
+                Ic(IconName.chevron, size: 16, color: FC.dim),
               ]),
             ),
           ]),
@@ -108,7 +108,7 @@ class _JobCard extends StatelessWidget {
 class _RouteMap extends StatelessWidget {
   final double height;
 
-  const _RouteMap();
+  const _RouteMap({this.height = 250});
 
   Widget _pin(IconName icon, bool gold) => Container(
         width: 36,
@@ -189,7 +189,7 @@ class _Avatar extends StatelessWidget {
         width: size,
         height: size,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.gold),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: FC.gold),
         child: Text(text, style: fs(size * .27, color: const Color(0xFF111111), w: FontWeight.w800, h: 1)),
       );
 }
@@ -351,7 +351,7 @@ class _RiderRegistrationScreenState extends State<RiderRegistrationScreen> {
           const SizedBox(height: 9),
           FcText(titles[_step - 1], kind: Tx.title),
           const SizedBox(height: 9),
-          const FcText('Join FuelConnect’s certified delivery partner network.', color: FC.muted),
+          FcText('Join FuelConnect’s certified delivery partner network.', color: FC.muted),
         ]),
         if (_step == 1) ...[
           FcField(label: 'Full legal name', hint: 'Your full name', icon: IconName.profile, controller: _name, error: _nameErr, action: TextInputAction.next),
@@ -426,12 +426,12 @@ class _RiderLoginScreenState extends State<RiderLoginScreen> {
       Image.asset('assets/images/station-card.jpg', fit: BoxFit.cover, width: double.infinity, height: double.infinity),
       const ImageShade(),
       Positioned(left: 24, top: topInset(context) + 24, child: const Logo(compact: true)),
-      const Positioned(left: 24, bottom: 22, child: FcText('CERTIFIED DELIVERY PARTNERS', kind: Tx.label, color: FC.gold)),
+      Positioned(left: 24, bottom: 22, child: FcText('CERTIFIED DELIVERY PARTNERS', kind: Tx.label, color: FC.gold)),
     ]);
     final form = <Widget>[
-      const FcText('RIDER PORTAL', kind: Tx.label, color: FC.gold),
+      FcText('RIDER PORTAL', kind: Tx.label, color: FC.gold),
       const FcText('Welcome back, partner.', kind: Tx.title),
-      const FcText('Sign in to view and manage your deliveries.', color: FC.muted),
+      FcText('Sign in to view and manage your deliveries.', color: FC.muted),
       FcField(label: 'Phone number', hint: '+256 700 123 456', icon: IconName.phone, controller: _phone, keyboard: TextInputType.phone, error: _phoneErr, action: TextInputAction.next),
       FcField(label: 'Password', hint: 'Enter your password', icon: IconName.shield, password: true, controller: _pass, error: _passErr, action: TextInputAction.done, onSubmitted: (_) => _submit()),
       Align(
@@ -441,7 +441,7 @@ class _RiderLoginScreenState extends State<RiderLoginScreen> {
       if (_formErr != null) FormError(_formErr!),
       FcButton('Sign in as rider', loading: _busy, onTap: _submit),
       FcButton('Register as a rider', variant: BV.outline, onTap: () => widget.go(Screen.riderRegistration)),
-      if (kDemoMode) const FcText('Demo rider: +256 701 234 567 · Rider@2025', kind: Tx.caption, color: FC.dim, align: TextAlign.center),
+      if (kDemoMode) FcText('Demo rider: +256 701 234 567 · Rider@2025', kind: Tx.caption, color: FC.dim, align: TextAlign.center),
     ];
     final pad = cl(context, 22, 6, 70);
     if (wide) {
@@ -555,15 +555,15 @@ class RiderDashboardScreen extends StatelessWidget {
                     border: al(FC.gold, .4),
                     padding: const EdgeInsets.all(14),
                     child: Row(children: [
-                      const Ic(IconName.truck, color: FC.gold),
+                      Ic(IconName.truck, color: FC.gold),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          const FcText('Trip in progress', kind: Tx.label, color: FC.gold),
+                          FcText('Trip in progress', kind: Tx.label, color: FC.gold),
                           FcText('#${rider.activeTrip!.id} · ${rider.activeTrip!.dropArea}', kind: Tx.caption, color: FC.muted),
                         ]),
                       ),
-                      const Ic(IconName.chevron, size: 18, color: FC.gold),
+                      Ic(IconName.chevron, size: 18, color: FC.gold),
                     ]),
                   ),
                 ),
@@ -574,11 +574,11 @@ class RiderDashboardScreen extends StatelessWidget {
                 trailing: TextAction('View all', onTap: () => go(Screen.riderDeliveries)),
               ),
               if (!rider.online)
-                const Panel(child: FcText('You’re offline. Tap the ONLINE chip at the top to start receiving delivery requests.', color: FC.muted))
+                Panel(child: FcText('You’re offline. Tap the ONLINE chip at the top to start receiving delivery requests.', color: FC.muted))
               else if (jobs.isEmpty)
                 Panel(
                   child: Column(children: [
-                    const FcText('You’re all caught up. New requests will appear here.', color: FC.muted, align: TextAlign.center),
+                    FcText('You’re all caught up. New requests will appear here.', color: FC.muted, align: TextAlign.center),
                     TextAction('Refresh', onTap: rider.refreshJobs),
                   ]),
                 )
@@ -675,11 +675,11 @@ class _RiderDeliveriesScreenState extends State<RiderDeliveriesScreen> {
               ),
               const SizedBox(height: 18),
               if (!rider.online)
-                const Panel(child: FcText('You’re offline. Go online to see delivery requests.', color: FC.muted))
+                Panel(child: FcText('You’re offline. Go online to see delivery requests.', color: FC.muted))
               else if (jobs.isEmpty)
                 Panel(
                   child: Column(children: [
-                    const FcText('No requests right now. We’ll notify you when one comes in.', color: FC.muted, align: TextAlign.center),
+                    FcText('No requests right now. We’ll notify you when one comes in.', color: FC.muted, align: TextAlign.center),
                     TextAction('Refresh', onTap: rider.refreshJobs),
                   ]),
                 )
@@ -784,7 +784,7 @@ class _RiderDecisionScreenState extends State<RiderDecisionScreen> {
               child: Text(_clock, style: fs(20, color: _left <= 10 ? FC.danger : FC.gold, w: FontWeight.w800, h: 1)),
             ),
             const SizedBox(height: 8),
-            const FcText('Request expires soon', kind: Tx.caption, color: FC.muted),
+            FcText('Request expires soon', kind: Tx.caption, color: FC.muted),
           ]),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -889,7 +889,7 @@ class _RiderNavigationScreenState extends State<RiderNavigationScreen> {
               Positioned(
                 left: w * .27,
                 top: h * .62,
-                child: Container(width: 43, height: 43, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.ink), child: const Center(child: Ic(IconName.location, color: Color(0xFF111111)))),
+                child: Container(width: 43, height: 43, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.ink), child: const Center(child: Ic(IconName.location, color: Color(0xFF111111)))),
               ),
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 900),
@@ -927,7 +927,7 @@ class _RiderNavigationScreenState extends State<RiderNavigationScreen> {
           width: 56,
           height: 56,
           decoration: BoxDecoration(color: al(FC.gold, .1), borderRadius: BorderRadius.circular(16)),
-          child: const Center(child: Ic(IconName.arrow, size: 26, color: FC.gold)),
+          child: Center(child: Ic(IconName.arrow, size: 26, color: FC.gold)),
         ),
         const SizedBox(width: 14),
         Expanded(
@@ -991,7 +991,7 @@ class _RiderNavigationScreenState extends State<RiderNavigationScreen> {
               Container(
                 constraints: BoxConstraints(minHeight: vh(context) - (mapH - 25)),
                 padding: EdgeInsets.fromLTRB(pad, 12, pad, 34 + bottomInset(context)),
-                decoration: const BoxDecoration(color: FC.black, borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
+                decoration: BoxDecoration(color: FC.black, borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
                 child: _sheet(context, handle: true),
               ),
             ]),
@@ -1046,7 +1046,7 @@ class _RiderPickupScreenState extends State<RiderPickupScreen> {
             width: 58,
             height: 58,
             decoration: BoxDecoration(color: al(FC.gold, .08), borderRadius: BorderRadius.circular(16)),
-            child: const Center(child: Ic(IconName.fuel, size: 30, color: FC.gold)),
+            child: Center(child: Ic(IconName.fuel, size: 30, color: FC.gold)),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -1059,11 +1059,11 @@ class _RiderPickupScreenState extends State<RiderPickupScreen> {
         Panel(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(children: [
-            const FcText('COLLECT EXACTLY', kind: Tx.label, color: FC.muted),
+            FcText('COLLECT EXACTLY', kind: Tx.label, color: FC.muted),
             const SizedBox(height: 6),
             Text('${j.litres}.0', style: fs(46, color: FC.gold, w: FontWeight.w800, h: 1)),
             const SizedBox(height: 4),
-            const FcText('LITRES', kind: Tx.label, color: FC.muted),
+            FcText('LITRES', kind: Tx.label, color: FC.muted),
           ]),
         ),
         Column(children: [
@@ -1102,7 +1102,7 @@ class _RiderPickupScreenState extends State<RiderPickupScreen> {
           action: TextInputAction.done,
           onSubmitted: (_) => _confirm(),
         ),
-        if (kDemoMode) const FcText('Demo mode: any 6 digits are accepted.', kind: Tx.caption, color: FC.dim),
+        if (kDemoMode) FcText('Demo mode: any 6 digits are accepted.', kind: Tx.caption, color: FC.dim),
         FcButton('Confirm fuel pickup', onTap: _checks.every((v) => v) ? _confirm : null),
       ]),
     );
@@ -1234,7 +1234,7 @@ class _RiderDeliveryScreenState extends State<RiderDeliveryScreen> {
           formatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(4)],
           action: TextInputAction.done,
         ),
-        if (kDemoMode) const FcText('Demo mode: any 4 digits are accepted.', kind: Tx.caption, color: FC.dim),
+        if (kDemoMode) FcText('Demo mode: any 4 digits are accepted.', kind: Tx.caption, color: FC.dim),
         Tap(
           onTap: () => setState(() => _photo = !_photo),
           child: Panel(
@@ -1350,7 +1350,7 @@ class _RiderEarningsScreenState extends State<RiderEarningsScreen> {
             border: al(FC.gold, .25),
             padding: const EdgeInsets.all(20),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              const FcText('AVAILABLE TO WITHDRAW', kind: Tx.caption, color: FC.muted),
+              FcText('AVAILABLE TO WITHDRAW', kind: Tx.caption, color: FC.muted),
               const SizedBox(height: 6),
               FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: FcText('UGX ${fmt(rider.available)}', kind: Tx.display)),
               const SizedBox(height: 16),
@@ -1374,7 +1374,7 @@ class _RiderEarningsScreenState extends State<RiderEarningsScreen> {
               for (var i = 0; i < rider.recent.length; i++)
                 Container(
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(border: i == rider.recent.length - 1 ? null : const Border(bottom: BorderSide(color: FC.line))),
+                  decoration: BoxDecoration(border: i == rider.recent.length - 1 ? null : Border(bottom: BorderSide(color: FC.line))),
                   child: Row(children: [
                     const IconBox(IconName.truck),
                     const SizedBox(width: 12),

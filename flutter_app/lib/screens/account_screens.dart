@@ -6,7 +6,7 @@ import '../services/auth_service.dart';
 import 'order_screens.dart' show VehicleTile;
 import 'sheets.dart';
 
-Widget _chevron() => const Ic(IconName.chevron, size: 18, color: FC.dim);
+Widget _chevron() => Ic(IconName.chevron, size: 18, color: FC.dim);
 
 Widget _groupLabel(String t) => Padding(padding: const EdgeInsets.only(top: 26, bottom: 10), child: FcText(t, kind: Tx.label, color: FC.gold));
 
@@ -94,23 +94,23 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 Row(children: [
                   Container(width: 44, height: 44, decoration: BoxDecoration(color: FC.gold, borderRadius: BorderRadius.circular(12)), child: const Center(child: Ic(IconName.truck, color: Color(0xFF111111)))),
                   const SizedBox(width: 12),
-                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('${app.productName} · ${app.litres}L', kind: Tx.subtitle), const FcText('Stabex Kira Road', kind: Tx.caption, color: FC.muted)])),
-                  const Ic(IconName.chevron, color: FC.muted),
+                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('${app.productName} · ${app.litres}L', kind: Tx.subtitle), FcText('Stabex Kira Road', kind: Tx.caption, color: FC.muted)])),
+                  Ic(IconName.chevron, color: FC.muted),
                 ]),
                 const SizedBox(height: 14),
-                ClipRRect(borderRadius: BorderRadius.circular(4), child: const LinearProgressIndicator(value: .62, minHeight: 4, backgroundColor: FC.line, valueColor: AlwaysStoppedAnimation(FC.gold))),
+                ClipRRect(borderRadius: BorderRadius.circular(4), child: LinearProgressIndicator(value: .62, minHeight: 4, backgroundColor: FC.line, valueColor: AlwaysStoppedAnimation(FC.gold))),
                 const SizedBox(height: 14),
-                const FcText('Marcus is heading to your location', kind: Tx.caption, color: FC.muted),
+                FcText('Marcus is heading to your location', kind: Tx.caption, color: FC.muted),
               ]),
             ),
           ),
         if (_tab == 'Cancelled')
-          const Padding(padding: EdgeInsets.symmetric(vertical: 40), child: FcText('You have no cancelled orders.', color: FC.muted, align: TextAlign.center))
+          Padding(padding: EdgeInsets.symmetric(vertical: 40), child: FcText('You have no cancelled orders.', color: FC.muted, align: TextAlign.center))
         else ...[
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const FcText('Recent orders', kind: Tx.title), TextAction('View all', onTap: () => setState(() => _tab = 'Completed'))]),
           const SizedBox(height: 15),
           if (hist.isEmpty)
-            const Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No orders match your search.', color: FC.muted, align: TextAlign.center))
+            Padding(padding: EdgeInsets.symmetric(vertical: 24), child: FcText('No orders match your search.', color: FC.muted, align: TextAlign.center))
           else
             Column(children: gapped([for (final o in hist) _history(o)], 10)),
         ],
@@ -132,27 +132,27 @@ class OrderDetailScreen extends StatelessWidget {
       body: Narrow(gap: 16, children: [
         Container(
           padding: const EdgeInsets.only(bottom: 17),
-          decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
           child: Row(children: [
-            Container(width: 48, height: 48, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: const Center(child: Ic(IconName.check, size: 24, color: Color(0xFF111111)))),
+            Container(width: 48, height: 48, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: const Center(child: Ic(IconName.check, size: 24, color: Color(0xFF111111)))),
             const SizedBox(width: 13),
-            const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Delivered successfully', kind: Tx.subtitle), FcText('29 May 2025 · 7:42 PM', kind: Tx.caption, color: FC.muted)]),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Delivered successfully', kind: Tx.subtitle), FcText('29 May 2025 · 7:42 PM', kind: Tx.caption, color: FC.muted)]),
           ]),
         ),
         Container(
           padding: const EdgeInsets.only(top: 18),
-          decoration: const BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: Border(top: BorderSide(color: FC.line))),
           child: Row(children: [
             ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset('assets/images/station-hero.jpg', width: 48, height: 48, fit: BoxFit.cover)),
             const SizedBox(width: 12),
-            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Stabex Kira Road', kind: Tx.label), FcText('Verified FuelConnect partner', kind: Tx.caption, color: FC.muted)])),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Stabex Kira Road', kind: Tx.label), FcText('Verified FuelConnect partner', kind: Tx.caption, color: FC.muted)])),
             Text('STABEX', style: fs(8, color: FC.gold, w: FontWeight.w900, ls: .96)),
           ]),
         ),
         Panel(
           padding: const EdgeInsets.all(17),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: gapped([
-            const FcText('DELIVERY SUMMARY', kind: Tx.label, color: FC.gold),
+            FcText('DELIVERY SUMMARY', kind: Tx.label, color: FC.gold),
             const KvRow('Product', 'Premium petrol', size: 10.88),
             const KvRow('Quantity', '35 litres', size: 10.88),
             const KvRow('Vehicle', 'Toyota RAV4 · UBP 482M', size: 10.88),
@@ -219,7 +219,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 constraints: const BoxConstraints(minHeight: 217),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Logo(compact: true), Ic(IconName.wallet, color: FC.gold)]),
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Logo(compact: true), Ic(IconName.wallet, color: FC.gold)]),
                     const SizedBox(height: 33),
                     const FcText('AVAILABLE BALANCE', kind: Tx.caption),
                     const SizedBox(height: 8),
@@ -247,13 +247,13 @@ class _WalletScreenState extends State<WalletScreen> {
           child: Panel(
             padding: const EdgeInsets.all(14),
             child: Row(children: [
-              Container(width: 44, height: 44, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: const Center(child: Ic(IconName.star, color: Color(0xFF111111)))),
+              Container(width: 44, height: 44, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.gold), child: const Center(child: Ic(IconName.star, color: Color(0xFF111111)))),
               const SizedBox(width: 12),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 FcText('GOLD MEMBER · ${fmt(app.points)} POINTS', kind: Tx.label),
                 FcText('${fmt(math.max(0, AppState.nextTierPoints - app.points))} points to your next fuel reward', kind: Tx.caption, color: FC.muted),
               ])),
-              const Ic(IconName.chevron, color: FC.muted),
+              Ic(IconName.chevron, color: FC.muted),
             ]),
           ),
         ),
@@ -261,7 +261,7 @@ class _WalletScreenState extends State<WalletScreen> {
         for (final t in app.txs)
           Container(
             constraints: const BoxConstraints(minHeight: 66),
-            decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
             child: Row(children: [
               IconBox(t.amount < 0 ? IconName.fuel : IconName.wallet, color: t.amount < 0 ? FC.gold : FC.green),
               const SizedBox(width: 12),
@@ -321,10 +321,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: gapped([
                 Text('GOLD', style: fs(9.6, color: FC.gold, w: FontWeight.w900, ls: 2.4)),
-                const Ic(IconName.star, size: 36, color: FC.gold),
+                Ic(IconName.star, size: 36, color: FC.gold),
                 FcText(fmt(p), kind: Tx.display, color: FC.gold),
-                const FcText('AVAILABLE POINTS', kind: Tx.caption, color: FC.gold),
-                ClipRRect(borderRadius: BorderRadius.circular(5), child: LinearProgressIndicator(value: (p / AppState.nextTierPoints).clamp(0, 1).toDouble(), minHeight: 5, backgroundColor: FC.line, valueColor: const AlwaysStoppedAnimation(FC.gold))),
+                FcText('AVAILABLE POINTS', kind: Tx.caption, color: FC.gold),
+                ClipRRect(borderRadius: BorderRadius.circular(5), child: LinearProgressIndicator(value: (p / AppState.nextTierPoints).clamp(0, 1).toDouble(), minHeight: 5, backgroundColor: FC.line, valueColor: AlwaysStoppedAnimation(FC.gold))),
                 FcText(left == 0 ? 'You have reached Platinum · Earn 1 point per UGX 1,000' : '${fmt(left)} points until Platinum · Earn 1 point per UGX 1,000', kind: Tx.caption, color: FC.gold, align: TextAlign.center),
               ], 12)),
             ),
@@ -344,7 +344,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(color: FC.surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: FC.line)),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      const Ic(IconName.drop, color: FC.gold),
+                      Ic(IconName.drop, color: FC.gold),
                       const SizedBox(height: 8),
                       FcText(r.$1, kind: Tx.label, color: FC.gold, align: TextAlign.center),
                       const SizedBox(height: 8),
@@ -358,7 +358,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
         Panel(
           padding: const EdgeInsets.all(17),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: gapped([
-            const FcText('HOW IT WORKS', kind: Tx.label, color: FC.gold),
+            FcText('HOW IT WORKS', kind: Tx.label, color: FC.gold),
             const KvRow('Order from any partner', 'Earn points', size: 10.88),
             const KvRow('Refer a friend', '+500 points', size: 10.88),
             const KvRow('Complete 5 deliveries', '+1,000 points', size: 10.88),
@@ -392,7 +392,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             }
           }))),
       body: ContentSection(children: [
-        const FcText('TODAY', kind: Tx.label, color: FC.gold),
+        FcText('TODAY', kind: Tx.label, color: FC.gold),
         const SizedBox(height: 10),
         for (final n in app.notices)
           Tap(
@@ -402,9 +402,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 16),
-              decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
               child: Stack(clipBehavior: Clip.none, children: [
-                if (n.fresh) Positioned(left: -8, top: 6, child: Container(width: 5, height: 5, decoration: const BoxDecoration(shape: BoxShape.circle, color: FC.gold))),
+                if (n.fresh) Positioned(left: -8, top: 6, child: Container(width: 5, height: 5, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.gold))),
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   IconBox(n.icon),
                   const SizedBox(width: 12),
@@ -419,6 +419,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 }
+
 
 // ===========================================================================
 // Settings / profile
@@ -436,7 +437,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Container(
           constraints: const BoxConstraints(minHeight: 57),
           padding: const EdgeInsets.symmetric(horizontal: 14),
-          decoration: BoxDecoration(border: last ? null : const Border(bottom: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: last ? null : Border(bottom: BorderSide(color: FC.line))),
           child: Row(children: [
             Ic(icon, color: FC.gold),
             const SizedBox(width: 12),
@@ -463,7 +464,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Narrow(gap: 0, padTop: 24, children: [
         Container(
           padding: const EdgeInsets.only(top: 6, bottom: 25),
-          decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: FC.line))),
           child: Row(children: [
             Container(width: 58, height: 58, alignment: Alignment.center, decoration: BoxDecoration(shape: BoxShape.circle, color: FC.surface2, border: Border.all(color: const Color(0xFF6B5A1E))), child: Text(pr.initials, style: fs(14, color: FC.gold, w: FontWeight.w800, h: 1))),
             const SizedBox(width: 13),
@@ -473,7 +474,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 await showEditProfileSheet(context);
                 if (mounted) setState(() {});
               },
-              child: const Padding(padding: EdgeInsets.all(6), child: Ic(IconName.chevron, color: FC.muted)),
+              child: Padding(padding: const EdgeInsets.all(6), child: Ic(IconName.chevron, color: FC.muted)),
             ),
           ]),
         ),
@@ -481,6 +482,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _group([
           _row(IconName.bell, 'Push notifications', trailing: FcToggle(on: app.pushOn, onTap: () => setState(() => app.pushOn = !app.pushOn))),
           _row(IconName.location, 'Location services', trailing: FcToggle(on: app.locationOn, onTap: () => setState(() => app.locationOn = !app.locationOn))),
+          _row(IconName.star, 'Dark mode', trailing: FcToggle(on: app.isDark, onTap: () => setState(() => app.toggleTheme()))),
           _row(IconName.card, 'Wallet & payment methods', onTap: () => widget.go(Screen.wallet)),
           _row(IconName.star, 'Rewards & referrals', onTap: () => widget.go(Screen.rewards), last: true),
         ]),
@@ -505,235 +507,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           widget.go(Screen.login, root: true);
         }),
         const SizedBox(height: 18),
-        const FcText('FuelConnect version 1.0.0', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
-      ]),
-    );
-  }
-}
-
-// ===========================================================================
-// Saved places
-// ===========================================================================
-class AddressesScreen extends StatefulWidget {
-  final Go go;
-  const AddressesScreen({super.key, required this.go});
-  @override
-  State<AddressesScreen> createState() => _AddressesScreenState();
-}
-
-class _AddressesScreenState extends State<AddressesScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return AppPage(
-      header: PageHeader(title: 'Saved places', goBack: () => app.backOr(Screen.profile)),
-      body: Narrow(gap: 20, children: [
-        Column(children: gapped([
-          for (final p in app.places)
-            Tap(
-              onTap: () {
-                app.deliveryAddress = p.address;
-                toast(context, '${p.label} set as your delivery location.');
-              },
-              child: Container(
-                constraints: const BoxConstraints(minHeight: 72),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: FC.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: FC.line)),
-                child: Row(children: [
-                  const IconBox(IconName.location),
-                  const SizedBox(width: 12),
-                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText(p.label, kind: Tx.label), FcText(p.address, kind: Tx.caption, color: FC.muted)])),
-                  _chevron(),
-                ]),
-              ),
-            ),
-        ], 9)),
-        FcButton('Add a new place', icon: IconName.plus, onTap: () async {
-          final ok = await showAddPlaceSheet(context);
-          if (ok == true && mounted) setState(() {});
-        }),
-      ]),
-    );
-  }
-}
-
-// ===========================================================================
-// My vehicles
-// ===========================================================================
-class VehiclesScreen extends StatefulWidget {
-  final Go go;
-  const VehiclesScreen({super.key, required this.go});
-  @override
-  State<VehiclesScreen> createState() => _VehiclesScreenState();
-}
-
-class _VehiclesScreenState extends State<VehiclesScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return AppPage(
-      header: PageHeader(title: 'My vehicles', goBack: () => app.backOr(Screen.profile)),
-      body: Narrow(gap: 20, children: [
-        Column(children: gapped([
-          for (var i = 0; i < app.vehicles.length; i++)
-            VehicleTile(
-              v: app.vehicles[i],
-              selected: i == 0,
-              caption: app.vehicles[i].listCaption,
-              trailing: i == 0
-                  ? Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), decoration: BoxDecoration(color: al(FC.gold, .1), borderRadius: BorderRadius.circular(20)), child: Text('DEFAULT', style: fs(8, color: FC.gold, w: FontWeight.w800, ls: .4, h: 1.2)))
-                  : _chevron(),
-              onTap: () => setState(() {
-                final v = app.vehicles.removeAt(i);
-                app.vehicles.insert(0, v);
-                app.vehicleId = v.id;
-              }),
-            ),
-        ], 10)),
-        FcButton('Add vehicle', icon: IconName.plus, onTap: () async {
-          final ok = await showAddVehicleSheet(context);
-          if (ok == true && mounted) setState(() {});
-        }),
-        const SafetyNote(title: 'Why vehicle details matter', body: 'We prevent fuel mix-ups and help drivers identify your vehicle.'),
-      ]),
-    );
-  }
-}
-
-// ===========================================================================
-// Help centre
-// ===========================================================================
-class SupportScreen extends StatelessWidget {
-  final Go go;
-  const SupportScreen({super.key, required this.go});
-  @override
-  Widget build(BuildContext context) {
-    const topics = ['Track my delivery', 'Payment or refund issue', 'Change or cancel an order', 'Fuel quality concern', 'Account and security'];
-    return AppPage(
-      header: PageHeader(title: 'Help centre', goBack: () => app.backOr(Screen.profile)),
-      body: Narrow(gap: 18, children: [
-        Container(
-          clipBehavior: Clip.antiAlias,
-          constraints: const BoxConstraints(minHeight: 230),
-          decoration: BoxDecoration(color: FC.surface, borderRadius: BorderRadius.circular(28), border: Border.all(color: const Color(0xFF504522))),
-          child: Stack(children: [
-            const Positioned.fill(child: Glow(fx: .5, fy: 0, colors: [Color(0x1FF5C72E), Color(0x00F5C72E)], stops: [0, .55])),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Ic(IconName.phone, size: 30, color: FC.gold),
-                  const SizedBox(height: 11),
-                  const FcText('How can we help?', kind: Tx.title, align: TextAlign.center),
-                  const SizedBox(height: 11),
-                  const FcText('Our delivery support team is available 24/7.', color: FC.muted, align: TextAlign.center),
-                  const SizedBox(height: 11),
-                  FcButton('Chat with support', expand: false, onTap: () => showSupportChat(context)),
-                ]),
-              ),
-            ),
-          ]),
-        ),
-        const FcText('POPULAR TOPICS', kind: Tx.label, color: FC.gold),
-        Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: FC.surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: FC.line)),
-          child: Column(children: [
-            for (var i = 0; i < topics.length; i++)
-              Tap(
-                onTap: () => showSupportChat(context, topic: topics[i]),
-                child: Container(
-                  constraints: const BoxConstraints(minHeight: 57),
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  decoration: BoxDecoration(border: i == topics.length - 1 ? null : const Border(bottom: BorderSide(color: FC.line))),
-                  child: Row(children: [const Ic(IconName.phone, color: FC.gold), const SizedBox(width: 12), Expanded(child: FcText(topics[i], kind: Tx.label)), _chevron()]),
-                ),
-              ),
-          ]),
-        ),
-        Tap(
-          onTap: () => go(Screen.safety),
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 72),
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: al(FC.danger, .06), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.danger, .25))),
-            child: Row(children: [
-              const Ic(IconName.shield, color: FC.danger),
-              const SizedBox(width: 12),
-              const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Safety or emergency?', kind: Tx.label, color: FC.danger), FcText('Open the FuelConnect Safety Centre', kind: Tx.caption, color: FC.danger)])),
-              const Ic(IconName.chevron, color: FC.danger),
-            ]),
-          ),
-        ),
-      ]),
-    );
-  }
-}
-
-// ===========================================================================
-// Safety centre
-// ===========================================================================
-class SafetyScreen extends StatelessWidget {
-  final Go go;
-  const SafetyScreen({super.key, required this.go});
-  @override
-  Widget build(BuildContext context) {
-    const tiles = [
-      ('Verified fuel', 'Sourced directly from partner stations', IconName.fuel),
-      ('Trained drivers', 'Identity and safety checks completed', IconName.profile),
-      ('Sealed equipment', 'Calibrated tanks and tamper seals', IconName.shield),
-      ('Live tracking', 'Shareable trip and driver details', IconName.location),
-    ];
-    return AppPage(
-      header: PageHeader(title: 'Safety centre', goBack: () => app.backOr(Screen.profile)),
-      body: Narrow(gap: 18, children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Column(children: gapped([
-            const RoundFeature(IconName.shield, size: 30),
-            const FcText('Your safety comes first.', kind: Tx.title, align: TextAlign.center),
-            const FcText('Every delivery is handled by trained partners using certified metered equipment and verified station fuel.', color: FC.muted, align: TextAlign.center),
-          ], 13)),
-        ),
-        LayoutBuilder(builder: (c, cons) {
-          final w = (cons.maxWidth - 10) / 2;
-          return Wrap(spacing: 10, runSpacing: 10, children: [
-            for (final t in tiles)
-              SizedBox(
-                width: w,
-                child: Container(
-                  constraints: const BoxConstraints(minHeight: 145),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(color: FC.surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: FC.line)),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Ic(t.$3, color: FC.gold),
-                    const SizedBox(height: 9),
-                    FcText(t.$1, kind: Tx.label),
-                    const SizedBox(height: 9),
-                    FcText(t.$2, kind: Tx.caption, color: FC.muted),
-                  ]),
-                ),
-              ),
-          ]);
-        }),
-        Tap(
-          onTap: () async {
-            try {
-              await launchUrl(Uri.parse('tel:999'));
-            } catch (_) {
-              if (context.mounted) toast(context, 'Call 999 for Uganda emergency services.');
-            }
-          },
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 72),
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: al(FC.danger, .06), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.danger, .25))),
-            child: Row(children: [
-              const Ic(IconName.phone, color: FC.danger),
-              const SizedBox(width: 12),
-              const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [FcText('Emergency assistance', kind: Tx.label, color: FC.danger), FcText('Call Uganda emergency services · 999', kind: Tx.caption, color: FC.danger)])),
-              const Ic(IconName.chevron, color: FC.danger),
-            ]),
-          ),
-        ),
+        FcText('FuelConnect version 1.0.0', kind: Tx.caption, color: FC.muted, align: TextAlign.center),
       ]),
     );
   }

@@ -44,12 +44,12 @@ class FcText extends StatelessWidget {
 class TextAction extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
-  final Color color;
-  const TextAction(this.text, {super.key, this.onTap, this.color = FC.gold});
+  final Color? color;
+  const TextAction(this.text, {super.key, this.onTap, this.color});
   @override
   Widget build(BuildContext context) => Tap(
         onTap: onTap,
-        child: Padding(padding: const EdgeInsets.all(6), child: Text(text, style: fs(11.52, color: color, w: FontWeight.w700))),
+        child: Padding(padding: const EdgeInsets.all(6), child: Text(text, style: fs(11.52, color: color ?? FC.gold, w: FontWeight.w700))),
       );
 }
 
@@ -92,14 +92,14 @@ class _FcButtonState extends State<FcButton> {
       case BV.primary:
         fg = FC.onGold;
         deco = BoxDecoration(
-          gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [FC.gold, FC.goldDeep]),
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [FC.gold, FC.goldDeep]),
           borderRadius: radius,
           boxShadow: [BoxShadow(color: al(FC.gold, .12), blurRadius: 32, offset: const Offset(0, 12))],
         );
         break;
       case BV.outline:
         fg = FC.gold;
-        deco = BoxDecoration(borderRadius: radius, border: Border.all(color: const Color(0xFF4B4324)));
+        deco = BoxDecoration(borderRadius: radius, border: Border.all(color: FC.goldBorder));
         break;
       case BV.ghost:
         fg = FC.muted;
@@ -107,7 +107,7 @@ class _FcButtonState extends State<FcButton> {
         break;
       case BV.icon:
         fg = FC.ink;
-        deco = BoxDecoration(color: const Color(0xC20C0E11), borderRadius: radius, border: Border.all(color: al(Colors.white, .12)));
+        deco = BoxDecoration(color: FC.iconBtnBg, borderRadius: radius, border: Border.all(color: al(FC.overlay, .12)));
         break;
     }
 
@@ -210,11 +210,11 @@ class _FcFieldState extends State<FcField> {
   @override
   Widget build(BuildContext context) {
     final err = widget.error != null;
-    final border = err ? FC.danger : (_focus.hasFocus ? const Color(0xFF7B6725) : FC.line);
+    final border = err ? FC.danger : (_focus.hasFocus ? FC.focusBorder : FC.line);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.label, textAlign: widget.labelAlign, style: fs(10.88, color: const Color(0xFFC7C8C9), w: FontWeight.w700, ls: .33)),
+        Text(widget.label, textAlign: widget.labelAlign, style: fs(10.88, color: FC.fieldLabel, w: FontWeight.w700, ls: .33)),
         const SizedBox(height: 8),
         AnimatedContainer(
           duration: const Duration(milliseconds: 150),
@@ -246,7 +246,7 @@ class _FcFieldState extends State<FcField> {
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
                     hintText: widget.hint,
-                    hintStyle: fs(12.48, color: const Color(0xFF5F646A), h: 1.3),
+                    hintStyle: fs(12.48, color: FC.hint, h: 1.3),
                     contentPadding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
@@ -273,7 +273,7 @@ class FormError extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(color: al(FC.danger, .06), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.danger, .25))),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Ic(IconName.shield, size: 16, color: FC.danger),
+          Ic(IconName.shield, size: 16, color: FC.danger),
           const SizedBox(width: 10),
           Expanded(child: Text(message, style: fs(11.52, color: FC.danger))),
         ]),
@@ -282,35 +282,22 @@ class FormError extends StatelessWidget {
 
 // ---------------------------------------------------------------------------
 // Brand
-// ---------------------------------------------------------------------------
 class Logo extends StatelessWidget {
   final bool compact;
   const Logo({super.key, this.compact = false});
+
   @override
   Widget build(BuildContext context) {
     final mark = compact ? 34.0 : 56.0;
-    final big = compact ? 14.72 : 24.8;
-    final small = compact ? 6.72 : 10.72;
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      SizedBox(
-        width: mark,
-        height: mark,
-        child: Stack(alignment: Alignment.center, children: [
-          Ic(IconName.drop, size: compact ? 22 : 34, color: FC.gold),
-          Text('F', style: fs(compact ? 9.6 : 14.4, w: FontWeight.w800, h: 1)),
-        ]),
+
+    return SizedBox(
+      width: mark,
+      height: mark,
+      child: Image.asset(
+        'assets/images/logo.png',
+        fit: BoxFit.contain,
       ),
-      SizedBox(width: compact ? 7 : 12),
-      Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.skewX(-7 * math.pi / 180),
-          child: Text('FUEL', style: fs(big, w: FontWeight.w800, ls: big * -.07, h: 1)),
-        ),
-        SizedBox(height: compact ? 2 : 4),
-        Text('CONNECT', style: fs(small, color: FC.gold, w: FontWeight.w700, ls: small * .18, h: 1)),
-      ]),
-    ]);
+    );
   }
 }
 
@@ -320,16 +307,16 @@ class Logo extends StatelessWidget {
 class ImageShade extends StatelessWidget {
   const ImageShade({super.key});
   @override
-  Widget build(BuildContext context) => const DecoratedBox(
+  Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0x1F000000), Color(0x1A080A0C), FC.black],
-            stops: [0, .45, 1],
+            colors: [const Color(0x1F000000), const Color(0x1A080A0C), FC.black],
+            stops: const [0, .45, 1],
           ),
         ),
-        child: SizedBox.expand(),
+        child: const SizedBox.expand(),
       );
 }
 
@@ -361,7 +348,7 @@ class _GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = bg);
-    final p = Paint()..color = const Color(0x09FFFFFF);
+    final p = Paint()..color = al(FC.overlay, .035);
     for (double x = 0; x < size.width; x += step) {
       canvas.drawRect(Rect.fromLTWH(x, 0, 1, size.height), p);
     }
@@ -375,11 +362,11 @@ class _GridPainter extends CustomPainter {
 }
 
 class MapGrid extends StatelessWidget {
-  final Color bg;
+  final Color? bg;
   final double step;
-  const MapGrid({super.key, this.bg = const Color(0xFF13171A), this.step = 28});
+  const MapGrid({super.key, this.bg, this.step = 28});
   @override
-  Widget build(BuildContext context) => CustomPaint(painter: _GridPainter(bg, step), child: const SizedBox.expand());
+  Widget build(BuildContext context) => CustomPaint(painter: _GridPainter(bg ?? FC.mapBg, step), child: const SizedBox.expand());
 }
 
 /// "L" shaped route (left + bottom border) with optional rounded corner/dots.
@@ -409,7 +396,7 @@ class _RoutePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RoutePainter old) => false;
+  bool shouldRepaint(covariant _RoutePainter old) => true;
 }
 
 class RouteLine extends StatelessWidget {
@@ -463,7 +450,7 @@ class FcToggle extends StatelessWidget {
           width: 40,
           height: 22,
           padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(color: on ? FC.gold : const Color(0xFF353940), borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(color: on ? FC.gold : FC.toggleOff, borderRadius: BorderRadius.circular(20)),
           alignment: on ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(width: 16, height: 16, decoration: BoxDecoration(shape: BoxShape.circle, color: on ? const Color(0xFF151515) : Colors.white)),
         ),
@@ -499,17 +486,20 @@ class RoundAction extends StatelessWidget {
 
 class IconBox extends StatelessWidget {
   final IconName icon;
-  final Color color;
+  final Color? color;
   final double size;
   final double radius;
-  const IconBox(this.icon, {super.key, this.color = FC.gold, this.size = 38, this.radius = 10});
+  const IconBox(this.icon, {super.key, this.color, this.size = 38, this.radius = 10});
   @override
-  Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(color: al(color, .08), borderRadius: BorderRadius.circular(radius)),
-        child: Center(child: Ic(icon, color: color)),
-      );
+  Widget build(BuildContext context) {
+    final c = color ?? FC.gold;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(color: al(c, .08), borderRadius: BorderRadius.circular(radius)),
+      child: Center(child: Ic(icon, color: c)),
+    );
+  }
 }
 
 class SectionHeading extends StatelessWidget {
@@ -542,13 +532,13 @@ class SearchBox extends StatelessWidget {
         height: 54,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: const Color(0xFF121519),
+          color: FC.searchBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: FC.line),
-          boxShadow: [BoxShadow(color: al(Colors.black, .28), blurRadius: 35, offset: const Offset(0, 10))],
+          boxShadow: [BoxShadow(color: al(Colors.black, FC.shadowAlpha), blurRadius: 35, offset: const Offset(0, 10))],
         ),
         child: Row(children: [
-          const Ic(IconName.search, size: 19, color: FC.muted),
+          Ic(IconName.search, size: 19, color: FC.muted),
           const SizedBox(width: 11),
           Expanded(
             child: TextField(
@@ -562,7 +552,7 @@ class SearchBox extends StatelessWidget {
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 hintText: hint,
-                hintStyle: fs(12.48, color: const Color(0xFF5F646A), h: 1.3),
+                hintStyle: fs(12.48, color: FC.hint, h: 1.3),
               ),
             ),
           ),
@@ -595,7 +585,7 @@ class PageHeader extends StatelessWidget {
     final top = topInset(context);
     return Container(
       height: 76 + top,
-      decoration: BoxDecoration(color: const Color(0xD1080A0C), border: Border(bottom: BorderSide(color: al(Colors.white, .06)))),
+      decoration: BoxDecoration(color: FC.headerBg, border: Border(bottom: BorderSide(color: al(FC.overlay, .06)))),
       child: Stack(children: [
         Padding(
           padding: EdgeInsets.fromLTRB(h, top, math.max(h, kRightInset), 0),
@@ -649,11 +639,11 @@ class BottomNav extends StatelessWidget {
               height: 72 + inset,
               padding: EdgeInsets.fromLTRB(padH, 5, padH, 5 + inset),
               decoration: BoxDecoration(
-                color: const Color(0xF00D0F12),
+                color: FC.navBg,
                 border: Border(
-                  top: const BorderSide(color: FC.line),
-                  left: wide ? const BorderSide(color: FC.line) : BorderSide.none,
-                  right: wide ? const BorderSide(color: FC.line) : BorderSide.none,
+                  top: BorderSide(color: FC.line),
+                  left: wide ? BorderSide(color: FC.line) : BorderSide.none,
+                  right: wide ? BorderSide(color: FC.line) : BorderSide.none,
                 ),
               ),
               child: Row(
@@ -771,7 +761,7 @@ class SafetyNote extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(color: al(FC.green, .05), borderRadius: BorderRadius.circular(12), border: Border.all(color: al(FC.green, .18))),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Ic(IconName.shield, color: FC.green),
+          Ic(IconName.shield, color: FC.green),
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -822,7 +812,7 @@ class TotalRow extends StatelessWidget {
         padding: const EdgeInsets.only(top: 14),
         decoration: BoxDecoration(
           gradient: kReproduceSourceQuirks ? kTotalGradient : null,
-          border: const Border(top: BorderSide(color: FC.line)),
+          border: Border(top: BorderSide(color: FC.line)),
         ),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(label, style: fs(13.6, color: FC.ink)),
@@ -885,8 +875,8 @@ class StationCard extends StatelessWidget {
 
   Widget _tag(String t) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-        decoration: BoxDecoration(color: const Color(0xFF1B1E22), borderRadius: BorderRadius.circular(20)),
-        child: Text(t, style: fs(8.8, color: const Color(0xFFC9CACC), h: 1.3)),
+        decoration: BoxDecoration(color: FC.tagBg, borderRadius: BorderRadius.circular(20)),
+        child: Text(t, style: fs(8.8, color: FC.tagText, h: 1.3)),
       );
 
   @override
@@ -913,7 +903,7 @@ class StationCard extends StatelessWidget {
                     Padding(padding: const EdgeInsets.only(right: 36), child: FcText(s.name, kind: Tx.subtitle)),
                     const SizedBox(height: 8),
                     Row(mainAxisSize: MainAxisSize.min, children: [
-                      const Ic(IconName.location, size: 13, color: FC.muted),
+                      Ic(IconName.location, size: 13, color: FC.muted),
                       const SizedBox(width: 4),
                       Flexible(child: Text('${s.distance} · ${s.eta}', style: fs(11.52, color: FC.muted))),
                     ]),
@@ -924,7 +914,7 @@ class StationCard extends StatelessWidget {
                     top: 17,
                     right: 0,
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      const Ic(IconName.star, size: 13, color: FC.gold),
+                      Ic(IconName.star, size: 13, color: FC.gold),
                       const SizedBox(width: 4),
                       Text(s.rating, style: fs(9.92, color: FC.gold)),
                     ]),
@@ -964,8 +954,8 @@ Future<R?> showFcSheet<R>(BuildContext context, {required String title, required
     backgroundColor: FC.surface,
     barrierColor: Colors.black54,
     constraints: const BoxConstraints(maxWidth: 560),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       side: BorderSide(color: FC.line),
     ),
     builder: (ctx) => Padding(
@@ -991,7 +981,7 @@ Future<bool> confirmDialog(BuildContext context, {required String title, require
     context: context,
     builder: (ctx) => Dialog(
       backgroundColor: FC.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: const BorderSide(color: FC.line)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: FC.line)),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 380),
         child: Padding(

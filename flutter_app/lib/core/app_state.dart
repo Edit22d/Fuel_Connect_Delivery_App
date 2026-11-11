@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'data.dart';
 import 'icons.dart';
+import 'theme.dart';
 
 enum Screen {
   splash, onboarding, login, signup, forgot, otp, newPassword, locationAccess,
@@ -103,6 +104,19 @@ class AppState extends ChangeNotifier {
   String location = 'Kololo, Kampala';
   bool pushOn = true;
   bool locationOn = true;
+
+  // ----- theme -------------------------------------------------------------
+  ThemeMode themeMode = ThemeMode.dark;
+  bool get isDark => themeMode == ThemeMode.dark;
+
+  void setDarkMode(bool value) {
+    themeMode = value ? ThemeMode.dark : ThemeMode.light;
+    FC.dark = value;
+    notifyListeners();
+    rebuildApp();
+  }
+
+  void toggleTheme() => setDarkMode(!isDark);
 
   // ----- order builder -----------------------------------------------------
   static const prices = {'Petrol': 5180, 'Diesel': 4960, 'Power': 6450};
